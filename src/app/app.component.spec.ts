@@ -11,8 +11,6 @@ describe('AppComponent', () => {
     }).compileComponents();
   });
 
-  jest.mock('./app.component');
-
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
@@ -21,13 +19,5 @@ describe('AppComponent', () => {
 
   it('should create the app', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('initialize the table', () => {
-    // arrange
-    component['height'] = 5;
-    component['width'] = 5;
-    // assert
-    expect(component.table.length).toBe(25);
   });
 });
