@@ -7,4 +7,8 @@ export class Robot {
   constructor(x: number, y: number, public direction: Direction) {
     this.location = { row: x, colum: y, isActive: true };
   }
+
+  toString() {
+    return `The robot is at ${this.location.row},${this.location.colum} facing ${this.direction}`;
+  }
 }
