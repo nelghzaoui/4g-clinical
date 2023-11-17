@@ -1,27 +1,46 @@
-# 4gClinical
+# Mars Robot Simulator
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.10.
+## Description
 
-## Development server
+- The application is a simulation of a toy robot moving on a square tabletop, with dimensions 5 units x 5 units.
+- No obstructions exist on the table surface.
+- The robot can move freely but must be prevented from falling off the table.
+- Commands:
+  - `PLACE X,Y,F`: Place the toy robot on the table at position X,Y facing NORTH, SOUTH, EAST, or WEST.
+  - `MOVE`: Move the toy robot one unit forward in its current direction.
+  - `LEFT`: Rotate the robot 90 degrees to the left without changing its position.
+  - `RIGHT`: Rotate the robot 90 degrees to the right without changing its position.
+  - `REPORT`: Announce the X, Y, and F of the robot.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Placement Rules
 
-## Code scaffolding
+- The origin (0,0) is the SOUTH WEST most corner.
+- The first valid command must be a `PLACE` command.
+- After the initial placement, any sequence of commands is allowed, including another `PLACE` command.
+- The application discards all commands in the sequence until a valid `PLACE` command is executed.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Movement Constraints
 
-## Build
+- A robot not on the table ignores `MOVE`, `LEFT`, `RIGHT`, and `REPORT` commands.
+- Any move that would cause the robot to fall off the table must be ignored.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Input
 
-## Running unit tests
+- Input can be from a file or standard input.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Constraints
 
-## Running end-to-end tests
+- The toy robot must not fall off the table during movement, including the initial placement.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Implementation
 
-## Further help
+- The application can be implemented in the frontend, backend, or as a multi-tiered app.
+- Technologies used: Django/Angular.
+- Consider UI/UX design.
+- Follow coding/framework best practices.
+- Ensure code readability, genericity, sustainability, and evolution.
+- Challenge the rules within reason.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Final Tips and Rules to Remember
+
+- Challenge the rules but not excessively.
