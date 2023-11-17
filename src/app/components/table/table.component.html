@@ -1,5 +1,8 @@
 <div class="table">
-  <div class="table-position" *ngFor="let item of table">
-    {{ item.row }},{{ item.colum }}
+  <div
+    *ngFor="let item of table$ | async"
+    [ngClass]="{ 'table-item': true, 'table-item-active': item.isActive }"
+  >
+    {{ item.row }},{{ item.colum }}, {{ item.isActive }}
   </div>
 </div>

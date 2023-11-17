@@ -18,11 +18,8 @@ describe('TableComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('initialize the table', () => {
-    // arrange
-    component['height'] = 5;
-    component['width'] = 5;
-    // assert
-    expect(component.table.length).toBe(25);
-  });
+  // TODO: Move it to table service
+  // it('initialize the table', () => {
+  //   expect(component.table.length).toBe(25);
+  // });
 });

@@ -2,12 +2,17 @@
   display: flex;
   flex-wrap: wrap;
 
-  .table-position {
+  .table-item {
     display: flex;
     justify-content: center;
     align-items: center;
     border: solid 1px black;
     flex: 0 1 calc(20% - 8px);
     height: 3rem;
+  }
+
+  .table-item-active {
+    background-color: red;
+    color: red;
   }
 }

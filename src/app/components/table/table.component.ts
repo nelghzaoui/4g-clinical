@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Location } from '../../models/location.interface';
+import { TableService } from '../../services/table.service';
 
 @Component({
   selector: 'table-component',
@@ -8,20 +8,11 @@ import { Location } from '../../models/location.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements OnInit {
-  private width = 5;
-  private height = 5;
+  table$ = this.tableService.table$;
 
-  table: Array<Location> = [];
+  constructor(private readonly tableService: TableService) {}
 
   ngOnInit(): void {
-    this.initialize();
-  }
-
-  initialize() {
-    for (let row = 0; row < this.height; row++) {
-      for (let colum = 0; colum < this.width; colum++) {
-        this.table.push({ row, colum });
-      }
-    }
+    this.tableService.initialize();
   }
 }
