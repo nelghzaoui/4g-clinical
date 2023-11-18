@@ -14,10 +14,10 @@ export class TableService {
   tableReady$ = this.tableReadySource.asObservable();
 
   initialize() {
-    for (let x = 0; x < this.height; x++) {
+    for (let x = this.height - 1; x >= 0; x--) {
       this.tableItems[x] = [];
       for (let y = 0; y < this.width; y++) {
-        this.tableItems[x][y] = new TableItem(x, y, false);
+        this.tableItems[x][y] = new TableItem(this.width - 1 - x, y, false);
       }
     }
 
@@ -26,13 +26,26 @@ export class TableService {
   }
 
   setActiveTableItem(x: number, y: number) {
-    this.tableItems[x][y].isActive = true;
+    const item: TableItem = this.findTableItem(x, y);
+    item.isActive = true;
     this.tableItemsSubject$.next(this.tableItems);
   }
 
   resetActiveTableItem(x: number, y: number) {
-    this.tableItems[x][y].isActive = false;
-
+    const item: TableItem = this.findTableItem(x, y);
+    item.isActive = false;
     this.tableItemsSubject$.next(this.tableItems);
+  }
+
+  private findTableItem(x: number, y: number): TableItem {
+    const item = this.tableItems
+      .flat()
+      .find((item) => item.x === x && item.y === y);
+
+    if (!item) {
+      throw new Error('Table item not found');
+    }
+
+    return item;
   }
 }
