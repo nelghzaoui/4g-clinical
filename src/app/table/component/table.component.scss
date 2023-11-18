@@ -3,16 +3,17 @@
   flex-wrap: wrap;
 
   .table-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     border: solid 1px black;
     flex: 0 1 calc(20% - 8px);
-    height: 3rem;
+  }
+
+  .table-item::after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
   }
 
   .table-item-active {
     background-color: red;
-    color: red;
   }
 }
