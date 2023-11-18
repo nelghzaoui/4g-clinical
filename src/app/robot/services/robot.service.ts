@@ -1,15 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Robot } from '../models/robot.class';
 import { Direction, Orientation } from '../models/direction.type';
-
+import { TableService } from '../../table/services/table.service';
 @Injectable({ providedIn: 'root' })
 export class RobotService {
   robot: Robot | undefined;
+  private isOffGrid = (x: number, y: number) =>
+    x < 0 || x > 4 || y < 0 || y > 4;
 
-  constructor() {}
+  constructor(private readonly tableService: TableService) {}
 
   place(x: number, y: number, direction: Direction) {
+    if (this.isOffGrid(x, y)) {
+      throw new Error('Robot is off grid');
+    }
+
     this.robot = new Robot(x, y, direction);
+    this.tableService.setActiveTableItem(x, y);
   }
 
   move() {
@@ -20,20 +27,30 @@ export class RobotService {
     switch (this.robot.direction) {
       case 'NORTH':
         this.isMoveForbidden(this.robot.x, this.robot.y + 1);
+        this.tableService.resetActiveTableItem(this.robot.x, this.robot.y);
+        this.tableService.setActiveTableItem(this.robot.x, this.robot.y + 1);
         this.robot.y++;
         break;
       case 'EAST':
         this.isMoveForbidden(this.robot.x + 1, this.robot.y);
+        this.tableService.resetActiveTableItem(this.robot.x, this.robot.y);
+        this.tableService.setActiveTableItem(this.robot.x + 1, this.robot.y);
         this.robot.x++;
         break;
       case 'SOUTH':
         this.isMoveForbidden(this.robot.x, this.robot.y - 1);
+        this.tableService.resetActiveTableItem(this.robot.x, this.robot.y);
+        this.tableService.setActiveTableItem(this.robot.x, this.robot.y - 1);
         this.robot.y--;
         break;
       case 'WEST':
         this.isMoveForbidden(this.robot.x - 1, this.robot.y);
+        this.tableService.resetActiveTableItem(this.robot.x, this.robot.y);
+        this.tableService.setActiveTableItem(this.robot.x - 1, this.robot.y);
         this.robot.x--;
         break;
+      default:
+        throw new Error('Invalid direction');
     }
   }
 
@@ -62,10 +79,9 @@ export class RobotService {
   }
 
   isMoveForbidden(x: number, y: number) {
-    const isOffGrid = x < 0 || x > 4 || y < 0 || y > 4;
     const isOnCorner = (x === 0 || x === 4) && (y === 0 || y === 4);
 
-    if (isOffGrid || isOnCorner) {
+    if (this.isOffGrid(x, y) || isOnCorner) {
       throw new Error('Forbidden move');
     }
   }
