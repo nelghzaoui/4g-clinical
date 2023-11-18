@@ -14,10 +14,10 @@ export class TableService {
   tableReady$ = this.tableReadySource.asObservable();
 
   initialize() {
-    for (let x = this.height - 1; x >= 0; x--) {
-      this.tableItems[x] = [];
-      for (let y = 0; y < this.width; y++) {
-        this.tableItems[x][y] = new TableItem(this.width - 1 - x, y, false);
+    for (let r = this.height - 1; r >= 0; r--) {
+      this.tableItems[r] = [];
+      for (let c = 0; c < this.width; c++) {
+        this.tableItems[r][c] = new TableItem(c, this.height - 1 - r, false);
       }
     }
 
