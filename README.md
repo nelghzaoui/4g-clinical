@@ -44,3 +44,12 @@
 ## Final Tips and Rules to Remember
 
 - Challenge the rules but not excessively.
+
+## What is still left to do:
+
+- Fix turn orientation issue
+- Add inputs forms
+- Handle errors more smoothly for the user
+- Add unit tests
+- Add e2e tests
+- Add more styling
