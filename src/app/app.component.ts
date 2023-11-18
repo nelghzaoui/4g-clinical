@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { filter, take } from 'rxjs';
 import { Command } from './models/command.type';
-import { Direction } from './robot/models/direction.type';
+import { Orientation } from './robot/models/direction.type';
 import { RobotService } from './robot/services/robot.service';
 import { TableService } from './table/services/table.service';
+import { Robot } from 'robot/models/robot.class';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +13,6 @@ import { TableService } from './table/services/table.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  x: number = 0; //TODO: Replace by form value
-  y: number = 0; //TODO: Replace by form value
-  d: Direction = 'SOUTH'; //TODO: Replace by form value
-
   constructor(
     private readonly tableService: TableService,
     private readonly robotService: RobotService
@@ -28,25 +25,45 @@ export class AppComponent implements OnInit {
         take(1)
       )
       .subscribe(() => {
-        this.listenToCommands('PLACE');
+        this.listenToCommands('PLACE', { x: 0, y: 0, direction: 'EAST' });
         this.listenToCommands('REPORT');
+        this.listenToCommands('RIGHT');
+        this.listenToCommands('REPORT');
+        setTimeout(() => {
+          this.listenToCommands('MOVE');
+          this.listenToCommands('REPORT');
+        }, 1000);
+        setTimeout(() => {
+          this.listenToCommands('MOVE');
+          this.listenToCommands('REPORT');
+        }, 2000);
+        setTimeout(() => {
+          this.listenToCommands('MOVE');
+          this.listenToCommands('REPORT');
+        }, 3000);
+        setTimeout(() => {
+          this.listenToCommands('RIGHT');
+          this.listenToCommands('MOVE');
+        }, 4000);
       });
   }
 
-  private listenToCommands(command: Command) {
+  private listenToCommands(command: Command, robot?: Robot) {
     switch (command) {
       case 'PLACE':
-        this.robotService.place(this.x, this.y, this.d);
-        this.tableService.setActiveTableItem(this.x, this.y);
+        if (robot === undefined) {
+          throw new Error('Robot is undefined');
+        }
+        this.robotService.place(robot.x, robot.y, robot.direction);
         break;
       case 'MOVE':
         this.robotService.move();
         break;
       case 'LEFT':
-        this.robotService.turn('LEFT');
+        this.robotService.turn(Orientation.LEFT);
         break;
       case 'RIGHT':
-        this.robotService.turn('RIGHT');
+        this.robotService.turn(Orientation.RIGHT);
         break;
       case 'REPORT':
         this.robotService.report();
