@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { TableService } from '../../services/table.service';
+import { TableService } from '../services/table.service';
+import { Observable } from 'rxjs';
+import { TableItem } from '../models/table-item.class';
 
 @Component({
   selector: 'table-component',
@@ -8,7 +10,7 @@ import { TableService } from '../../services/table.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements OnInit {
-  table$ = this.tableService.table$;
+  tableItems$: Observable<TableItem[][]> = this.tableService.tableItems$;
 
   constructor(private readonly tableService: TableService) {}
 

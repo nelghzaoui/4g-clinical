@@ -1,0 +1,14 @@
+<div *ngIf="tableItems$ | async as items" class="table">
+  <ng-container *ngFor="let item of items">
+    <ng-container *ngFor="let subItem of item">
+      <div
+        [ngClass]="{
+          'table-item': true,
+          'table-item-active': subItem.isActive
+        }"
+      >
+        {{ subItem.x }},{{ subItem.y }}, {{ subItem.isActive }}
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
