@@ -38,8 +38,19 @@ export class RobotService {
   }
 
   turn(orientation: Orientation) {
-    //TODO: Rotate to 90 degrees in the given orientation
-    throw new Error('Method not implemented.');
+    if (!this.robot) {
+      throw new Error('Robot has not been placed yet');
+    }
+
+    const directions: Direction[] = Object.values(Direction);
+    let currentDirectionIndex = directions.indexOf(this.robot.direction);
+
+    const newIndex =
+      orientation === Orientation.LEFT
+        ? (currentDirectionIndex + 1) % directions.length
+        : (currentDirectionIndex - 1 + directions.length) % directions.length;
+
+    this.robot.direction = directions[newIndex];
   }
 
   report() {
