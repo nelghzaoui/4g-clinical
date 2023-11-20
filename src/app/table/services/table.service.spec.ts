@@ -32,8 +32,7 @@ describe('TableService', () => {
       service.initialize();
       // assert
       service.tableItems$.subscribe((tableItems) => {
-        console.log(tableItems[0][4], expectValue);
-        expect(tableItems[0][4]).toStrictEqual(expectValue);
+        expect(tableItems[4][0]).toStrictEqual(expectValue);
       });
     });
   });
@@ -71,7 +70,7 @@ describe('TableService', () => {
     const result = () => service['findTableItem'](x, y);
     // assert
     if (shouldThrow) {
-      expect(result).toThrowErrorMatchingSnapshot('Table item not found');
+      expect(result).toThrow('Table item not found');
     } else {
       expect(result()).toStrictEqual(expectValue);
     }

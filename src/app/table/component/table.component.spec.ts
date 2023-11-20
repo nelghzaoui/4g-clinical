@@ -6,9 +6,7 @@ describe('TableComponent', () => {
   let fixture: ComponentFixture<TableComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [TableComponent],
-    });
+    TestBed.configureTestingModule({ declarations: [TableComponent] });
     fixture = TestBed.createComponent(TableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -18,8 +16,14 @@ describe('TableComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: Move it to table service
-  // it('initialize the table', () => {
-  //   expect(component.table.length).toBe(25);
-  // });
+  describe('ngOnInit', () => {
+    it('should call initialize', () => {
+      // arrange
+      const initializeSpy = jest.spyOn(component['tableService'], 'initialize');
+      // act
+      component.ngOnInit();
+      // assert
+      expect(initializeSpy).toHaveBeenCalled();
+    });
+  });
 });

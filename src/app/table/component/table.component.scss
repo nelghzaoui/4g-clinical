@@ -1,6 +1,9 @@
 .table {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  max-width: 50vh;
+  margin: auto;
 
   .table-item {
     border: solid 1px black;
