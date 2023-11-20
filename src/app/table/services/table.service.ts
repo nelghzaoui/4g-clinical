@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
-import { TableItem } from 'table/models/table-item.class';
+import { TableItem } from '../models/table-item.class';
 
 @Injectable({ providedIn: 'root' })
 export class TableService {
@@ -14,9 +14,10 @@ export class TableService {
   tableReady$ = this.tableReadySource.asObservable();
 
   initialize() {
-    for (let r = this.height - 1; r >= 0; r--) {
+    for (let r = 0; r < this.height; r++) {
       this.tableItems[r] = [];
       for (let c = 0; c < this.width; c++) {
+        // Set the origin at the bottom left corner
         this.tableItems[r][c] = new TableItem(c, this.height - 1 - r, false);
       }
     }
@@ -26,15 +27,11 @@ export class TableService {
   }
 
   setActiveTableItem(x: number, y: number) {
-    const item: TableItem = this.findTableItem(x, y);
-    item.isActive = true;
-    this.tableItemsSubject$.next(this.tableItems);
+    this.updateTableItem(x, y, true);
   }
 
   resetActiveTableItem(x: number, y: number) {
-    const item: TableItem = this.findTableItem(x, y);
-    item.isActive = false;
-    this.tableItemsSubject$.next(this.tableItems);
+    this.updateTableItem(x, y, false);
   }
 
   private findTableItem(x: number, y: number): TableItem {
@@ -47,5 +44,13 @@ export class TableService {
     }
 
     return item;
+  }
+
+  private updateTableItem(x: number, y: number, isActive: boolean) {
+    const item: TableItem = this.findTableItem(x, y);
+    item.isActive = isActive;
+
+    // Update the item in the array
+    this.tableItemsSubject$.next(this.tableItems);
   }
 }
