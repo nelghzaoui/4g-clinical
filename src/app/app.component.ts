@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { GameService } from './services/game/game.service';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,16 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     <table-component></table-component>
 
     <command-component></command-component>
+
+    <button (click)="reset()">Reset</button>
   `,
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {}
+export class AppComponent {
+  constructor(private readonly gameService: GameService) {}
+
+  reset() {
+    this.gameService.reset();
+  }
+}
