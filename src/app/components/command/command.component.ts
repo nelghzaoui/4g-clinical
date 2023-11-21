@@ -1,7 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { Command } from '../../models/command.type';
-import { Direction, Orientation } from '../../models/direction.type';
+import { Command, Commands } from '../../models/command.type';
+import {
+  Direction,
+  Directions,
+  Orientation,
+} from '../../models/direction.type';
 import { RobotService } from '../../services/robot/robot.service';
 
 @Component({
@@ -11,19 +15,20 @@ import { RobotService } from '../../services/robot/robot.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommandComponent implements OnInit {
+  commands: Command[] = Commands;
+  directions: Direction[] = Directions;
+  reportLabel: string = '';
+
+  /* Forms values */
   command: Command = 'PLACE';
   x: number = 0;
   y: number = 0;
   direction: Direction = 'SOUTH';
   turnDirection: Orientation = 'LEFT';
 
-  reportLabel: string = '';
-
   constructor(private readonly robotService: RobotService) {}
 
-  ngOnInit(): void {
-    this.onSubmit();
-  }
+  ngOnInit(): void {}
 
   onSubmit(): void {
     switch (this.command) {
