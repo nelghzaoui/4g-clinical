@@ -42,5 +42,6 @@ export class GameService {
   reset(): void {
     this.robotService.reset();
     this.tableService.reset();
+    throw new Error('Reset');
   }
 }
