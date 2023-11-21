@@ -1,0 +1,46 @@
+<!-- FILEPATH: /c:/Users/nasro/Documents/4g-clinical/4g-clinical/src/app/robot/components/command/command.component.html -->
+
+<form (ngSubmit)="onSubmit()">
+  <div>
+    <label for="commands">Select your next move:</label>
+    <select id="commands" name="commands" [(ngModel)]="command" required>
+      <option value="PLACE">Place</option>
+      <option value="MOVE">Move</option>
+      <option value="TURN">Turn</option>
+      <option value="REPORT">Report</option>
+    </select>
+  </div>
+
+  <div *ngIf="command === 'PLACE'">
+    <label for="x">X:</label>
+    <input type="number" id="x" name="x" [(ngModel)]="x" required />
+
+    <label for="y">Y:</label>
+    <input type="number" id="y" name="y" [(ngModel)]="y" required />
+
+    <label for="direction">Direction:</label>
+    <select id="direction" name="direction" [(ngModel)]="direction" required>
+      <option value="north">North</option>
+      <option value="south">South</option>
+      <option value="east">East</option>
+      <option value="west">West</option>
+    </select>
+  </div>
+
+  <div *ngIf="command === 'TURN'">
+    <label for="turnDirection">Turn Direction:</label>
+    <select
+      id="turnDirection"
+      name="turnDirection"
+      [(ngModel)]="turnDirection"
+      required
+    >
+      <option value="left">Left</option>
+      <option value="right">Right</option>
+    </select>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+
+<p *ngIf="reportLabel">{{ reportLabel }}</p>

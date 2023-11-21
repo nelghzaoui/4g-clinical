@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Robot } from '../models/robot.class';
-import { Direction, Orientation } from '../models/direction.type';
-import { TableService } from '../../table/services/table.service';
+import { Robot } from '../../models/robot.class';
+import { Direction, Orientation } from '../../models/direction.type';
+import { TableService } from '../table/table.service';
 @Injectable({ providedIn: 'root' })
 export class RobotService {
   robot: Robot | undefined;
@@ -70,12 +70,12 @@ export class RobotService {
     this.robot.direction = directions[newIndex];
   }
 
-  report() {
+  report(): string {
     if (!this.robot) {
       throw new Error('Robot has not been placed yet');
     }
 
-    console.log(this.robot.toString());
+    return this.robot.toString();
   }
 
   isMoveForbidden(x: number, y: number) {

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { TableService } from './table.service';
-import { TableItem } from '../models/table-item.class';
+import { TableItem } from '../../models/table-item.class';
 
 describe('TableService', () => {
   let service: TableService;

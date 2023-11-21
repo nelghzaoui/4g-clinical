@@ -1,4 +1,4 @@
-import { Location } from '../../models/location.class';
+import { Location } from './location.class';
 
 export class TableItem extends Location {
   constructor(x: number, y: number, public isActive: boolean) {

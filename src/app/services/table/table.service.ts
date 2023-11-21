@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
-import { TableItem } from '../models/table-item.class';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { TableItem } from '../../models/table-item.class';
 
 @Injectable({ providedIn: 'root' })
 export class TableService {
@@ -10,8 +10,6 @@ export class TableService {
   private tableItemsSubject$ = new BehaviorSubject<TableItem[][]>([]);
   tableItems$: Observable<TableItem[][]> =
     this.tableItemsSubject$.asObservable();
-  private tableReadySource = new ReplaySubject(1);
-  tableReady$ = this.tableReadySource.asObservable();
 
   initialize() {
     for (let r = 0; r < this.height; r++) {
@@ -23,7 +21,6 @@ export class TableService {
     }
 
     this.tableItemsSubject$.next(this.tableItems);
-    this.tableReadySource.next(true);
   }
 
   setActiveTableItem(x: number, y: number) {

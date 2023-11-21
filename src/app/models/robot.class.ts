@@ -1,4 +1,4 @@
-import { Location } from '../../models/location.class';
+import { Location } from './location.class';
 import { Direction } from './direction.type';
 
 export class Robot extends Location {

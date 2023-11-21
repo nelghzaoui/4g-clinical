@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { TableService } from '../services/table.service';
+import { TableService } from '../../services/table/table.service';
 import { Observable } from 'rxjs';
-import { TableItem } from '../models/table-item.class';
+import { TableItem } from '../../models/table-item.class';
 
 @Component({
   selector: 'table-component',

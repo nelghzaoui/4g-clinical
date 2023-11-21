@@ -1,1 +1,1 @@
-export type Command = 'PLACE' | 'MOVE' | 'LEFT' | 'RIGHT' | 'REPORT';
+export type Command = 'PLACE' | 'MOVE' | 'TURN' | 'REPORT';
