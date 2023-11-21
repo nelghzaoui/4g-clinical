@@ -1,53 +1,44 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TableItem } from '../../models/table-item.class';
+import { Table } from '../../models/table.class';
+import { Location } from '../../models/location.class';
 
 @Injectable({ providedIn: 'root' })
 export class TableService {
-  private readonly width = 5;
-  private readonly height = 5;
-  private tableItems: TableItem[][] = [];
+  private table: Table;
   private tableItemsSubject$ = new BehaviorSubject<TableItem[][]>([]);
   tableItems$: Observable<TableItem[][]> =
     this.tableItemsSubject$.asObservable();
 
+  constructor() {
+    this.table = new Table(5, 5);
+  }
+
   initialize() {
-    for (let r = 0; r < this.height; r++) {
-      this.tableItems[r] = [];
-      for (let c = 0; c < this.width; c++) {
-        // Set the origin at the bottom left corner
-        this.tableItems[r][c] = new TableItem(c, this.height - 1 - r, false);
-      }
-    }
-
-    this.tableItemsSubject$.next(this.tableItems);
+    this.tableItemsSubject$.next(this.table.tableItems);
   }
 
-  setActiveTableItem(x: number, y: number) {
-    this.updateTableItem(x, y, true);
+  isMoveForbidden(x: number, y: number): boolean {
+    return this.table.isMoveForbidden(x, y);
   }
 
-  resetActiveTableItem(x: number, y: number) {
-    this.updateTableItem(x, y, false);
+  simulateMovement(currentLocation: Location, nextLocation: Location) {
+    this.updateTableItem(currentLocation.x, currentLocation.y, false);
+    this.updateTableItem(nextLocation.x, nextLocation.y, true);
   }
 
-  private findTableItem(x: number, y: number): TableItem {
-    const item = this.tableItems
-      .flat()
-      .find((item) => item.x === x && item.y === y);
-
-    if (!item) {
-      throw new Error('Table item not found');
-    }
-
-    return item;
+  updateTableItem(x: number, y: number, isActive: boolean = false) {
+    const items = this.table.updateTableItem(x, y, isActive);
+    this.tableItemsSubject$.next(items);
   }
 
-  private updateTableItem(x: number, y: number, isActive: boolean) {
-    const item: TableItem = this.findTableItem(x, y);
-    item.isActive = isActive;
+  hasLocation(x: number, y: number): boolean {
+    return this.table.hasLocation({ x, y });
+  }
 
-    // Update the item in the array
-    this.tableItemsSubject$.next(this.tableItems);
+  reset() {
+    this.table.initialize();
+    this.tableItemsSubject$.next(this.table.tableItems);
   }
 }

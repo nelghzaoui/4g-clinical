@@ -5,6 +5,10 @@ export class TableItem extends Location {
     super(x, y);
   }
 
+  setActive(isActive: boolean) {
+    this.isActive = isActive;
+  }
+
   override toString() {
     return `Current location: ${this.x},${this.y}`;
   }
