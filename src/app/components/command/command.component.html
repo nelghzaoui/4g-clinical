@@ -27,12 +27,7 @@
 
   <div *ngIf="command === 'TURN'">
     <label for="turnDirection">Turn Direction:</label>
-    <select
-      id="turnDirection"
-      name="turnDirection"
-      [(ngModel)]="turnDirection"
-      required
-    >
+    <select id="turnDirection" name="turnDirection" [(ngModel)]="turnDirection" required>
       <option *ngFor="let orientation of orientations" [value]="orientation">
         {{ orientation }}
       </option>

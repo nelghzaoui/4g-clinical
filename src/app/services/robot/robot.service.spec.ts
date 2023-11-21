@@ -16,9 +16,7 @@ describe('RobotService', () => {
   xdescribe('place', () => {
     it('should throw an error when placing robot off grid', () => {
       // arrange
-      const isOffGridSpy = jest
-        .spyOn(service as any, 'isOffGrid')
-        .mockReturnValue(true);
+      const isOffGridSpy = jest.spyOn(service as any, 'isOffGrid').mockReturnValue(true);
       // act
       service.place(5, 5, 'NORTH');
       // assert
@@ -27,9 +25,7 @@ describe('RobotService', () => {
 
     it('should place robot on grid', () => {
       // arrange
-      const isOffGridSpy = jest
-        .spyOn(service as any, 'isOffGrid')
-        .mockReturnValue(true);
+      const isOffGridSpy = jest.spyOn(service as any, 'isOffGrid').mockReturnValue(true);
       // act
       service.place(0, 0, 'NORTH');
       // assert
@@ -42,9 +38,7 @@ describe('RobotService', () => {
       // arrange
       service.robot = { x: 0, y: 0, direction: 'NORTH' };
       // assert
-      expect(() => service.report()).not.toThrow(
-        'Robot has not been placed yet'
-      );
+      expect(() => service.report()).not.toThrow('Robot has not been placed yet');
     });
 
     it('should throw an error if robot not placed yet', () => {

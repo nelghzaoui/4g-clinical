@@ -20,9 +20,7 @@ export class Table {
   }
 
   private findTableItem(x: number, y: number): TableItem {
-    const item = this.tableItems
-      .flat()
-      .find((item) => item.x === x && item.y === y);
+    const item = this.tableItems.flat().find((item) => item.x === x && item.y === y);
 
     if (!item) {
       throw new Error('Table item not found');
@@ -56,9 +54,6 @@ export class Table {
   }
 
   private isOnCorner(x: number, y: number) {
-    return (
-      (x === this.zero || x === this.width - 1) &&
-      (y === this.zero || y === this.height - 1)
-    );
+    return (x === this.zero || x === this.width - 1) && (y === this.zero || y === this.height - 1);
   }
 }

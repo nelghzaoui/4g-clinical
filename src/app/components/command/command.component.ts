@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { OnInit } from '@angular/core';
 import { Command, Commands } from '../../models/command.type';
+import { Direction, Directions, Orientation, Orientations } from '../../models/direction.type';
+import { GameService } from '../../services/game/game.service';
 import {
-  Direction,
-  Directions,
-  Orientation,
-  Orientations,
-} from '../../models/direction.type';
-import { RobotService } from '../../services/robot/robot.service';
+  CommandPattern,
+  MoveCommand,
+  PlaceCommand,
+  ReportCommand,
+  TurnCommand,
+} from '../../models/command-pattern.interface';
 
 @Component({
   selector: 'command-component',
@@ -15,7 +16,7 @@ import { RobotService } from '../../services/robot/robot.service';
   styleUrls: ['./command.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CommandComponent implements OnInit {
+export class CommandComponent {
   commands: Command[] = Commands;
   directions: Direction[] = Directions;
   orientations: Orientation[] = Orientations;
@@ -28,36 +29,39 @@ export class CommandComponent implements OnInit {
   direction: Direction = 'SOUTH';
   turnDirection: Orientation = 'LEFT';
 
-  constructor(private readonly robotService: RobotService) {}
-
-  ngOnInit(): void {}
+  constructor(private readonly gameService: GameService) {}
 
   onSubmit(): void {
+    let command: CommandPattern;
+
     switch (this.command) {
       case 'PLACE':
-        if (
-          this.x === undefined ||
-          this.y === undefined ||
-          this.direction === undefined
-        ) {
-          throw new Error('Invalid place command');
-        }
-        this.robotService.place(this.x, this.y, this.direction);
+        command = new PlaceCommand(this.gameService, this.x, this.y, this.direction);
         break;
       case 'MOVE':
-        this.robotService.move();
+        command = new MoveCommand(this.gameService);
         break;
       case 'TURN':
-        if (this.turnDirection === undefined) {
-          throw new Error('Invalid turn command');
-        }
-        this.robotService.turn(
-          this.turnDirection === 'LEFT' ? Orientation.LEFT : Orientation.RIGHT
-        );
+        const turnDirection = this.turnDirection === 'LEFT' ? 'LEFT' : 'RIGHT';
+        command = new TurnCommand(this.gameService, turnDirection);
         break;
       case 'REPORT':
-        this.reportLabel = this.robotService.report();
+        command = new ReportCommand(this.gameService);
         break;
+      default:
+        this.resetForm();
+        throw new Error('Invalid command');
     }
+
+    command.validate();
+    command.execute();
+  }
+
+  private resetForm(): void {
+    this.command = 'PLACE';
+    this.x = 0;
+    this.y = 0;
+    this.direction = 'SOUTH';
+    this.turnDirection = 'LEFT';
   }
 }

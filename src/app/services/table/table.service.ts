@@ -8,8 +8,7 @@ import { Location } from '../../models/location.class';
 export class TableService {
   private table: Table;
   private tableItemsSubject$ = new BehaviorSubject<TableItem[][]>([]);
-  tableItems$: Observable<TableItem[][]> =
-    this.tableItemsSubject$.asObservable();
+  tableItems$: Observable<TableItem[][]> = this.tableItemsSubject$.asObservable();
 
   constructor() {
     this.table = new Table(5, 5);
