@@ -5,6 +5,7 @@ import {
   Direction,
   Directions,
   Orientation,
+  Orientations,
 } from '../../models/direction.type';
 import { RobotService } from '../../services/robot/robot.service';
 
@@ -17,6 +18,7 @@ import { RobotService } from '../../services/robot/robot.service';
 export class CommandComponent implements OnInit {
   commands: Command[] = Commands;
   directions: Direction[] = Directions;
+  orientations: Orientation[] = Orientations;
   reportLabel: string = '';
 
   /* Forms values */

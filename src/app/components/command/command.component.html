@@ -1,13 +1,12 @@
 <!-- FILEPATH: /c:/Users/nasro/Documents/4g-clinical/4g-clinical/src/app/robot/components/command/command.component.html -->
 
-<form (ngSubmit)="onSubmit()">
+<form #commandForm="ngForm" (ngSubmit)="onSubmit()">
   <div>
     <label for="commands">Select your next move:</label>
     <select id="commands" name="commands" [(ngModel)]="command" required>
-      <option value="PLACE">Place</option>
-      <option value="MOVE">Move</option>
-      <option value="TURN">Turn</option>
-      <option value="REPORT">Report</option>
+      <option *ngFor="let command of commands" [value]="command">
+        {{ command }}
+      </option>
     </select>
   </div>
 
@@ -20,10 +19,9 @@
 
     <label for="direction">Direction:</label>
     <select id="direction" name="direction" [(ngModel)]="direction" required>
-      <option value="north">North</option>
-      <option value="south">South</option>
-      <option value="east">East</option>
-      <option value="west">West</option>
+      <option *ngFor="let direction of directions" [value]="direction">
+        {{ direction }}
+      </option>
     </select>
   </div>
 
@@ -35,8 +33,9 @@
       [(ngModel)]="turnDirection"
       required
     >
-      <option value="left">Left</option>
-      <option value="right">Right</option>
+      <option *ngFor="let orientation of orientations" [value]="orientation">
+        {{ orientation }}
+      </option>
     </select>
   </div>
 
