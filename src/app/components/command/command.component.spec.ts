@@ -36,9 +36,87 @@ describe('CommandComponent', () => {
     fixture = TestBed.createComponent(CommandComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    jest.spyOn(component as any, 'resetForm');
   });
 
   it('should create the component', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('onSubmit', () => {
+    it('should execute the place command', () => {
+      // arrange
+      component.command = 'PLACE';
+      component.x = 1;
+      component.y = 2;
+      component.direction = 'NORTH';
+      // act
+      component.onSubmit();
+      // assert
+      expect(component['resetForm']).not.toHaveBeenCalled();
+    });
+
+    it('should execute the move command', () => {
+      // arrange
+      component.command = 'MOVE';
+      // act
+      component.onSubmit();
+      // assert
+      expect(component['resetForm']).not.toHaveBeenCalled();
+    });
+
+    it('should execute the turn command', () => {
+      // arrange
+      component.command = 'TURN';
+      component.orientation = 'RIGHT';
+      // act
+      component.onSubmit();
+      // assert
+      expect(component['resetForm']).not.toHaveBeenCalled();
+    });
+
+    it('should execute the turn command', () => {
+      // arrange
+      component.command = 'TURN';
+      component.orientation = 'LEFT';
+      // act
+      component.onSubmit();
+      // assert
+      expect(component['resetForm']).not.toHaveBeenCalled();
+    });
+
+    it('should execute the report command', () => {
+      // arrange
+      component.command = 'REPORT';
+      // act
+      component.onSubmit();
+      // assert
+      expect(component['resetForm']).not.toHaveBeenCalled();
+    });
+
+    it('should throw an error with invalid command', () => {
+      // arrange
+      component.command = 'INVALID' as any;
+      // assert
+      expect(() => component.onSubmit()).toThrow('Invalid command');
+    });
+  });
+
+  describe('restForm', () => {
+    it('should reset the form', () => {
+      component.command = 'PLACE';
+      component.x = 1;
+      component.y = 2;
+      component.direction = 'NORTH';
+      component.orientation = 'RIGHT';
+
+      component['resetForm']();
+
+      expect(component.command).toEqual('PLACE');
+      expect(component.x).toEqual(0);
+      expect(component.y).toEqual(0);
+      expect(component.direction).toEqual('SOUTH');
+      expect(component.orientation).toEqual('LEFT');
+    });
   });
 });

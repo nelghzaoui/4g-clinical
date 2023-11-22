@@ -1,4 +1,4 @@
-import { TableItem } from '../../src/app/models/table-item.class';
+import { TableItem } from '../../app/models/table-item.class';
 
 describe('TableItem', () => {
   let tableItem: TableItem;

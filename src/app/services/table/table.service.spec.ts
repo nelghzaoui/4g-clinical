@@ -41,17 +41,32 @@ describe('TableService', () => {
     expect(service['updateTableItem']).toHaveBeenCalledWith(nextPos.x, nextPos.y, true);
   });
 
-  it('should update table item', () => {
-    const x = 0;
-    const y = 0;
-    const isActive = true;
-    jest.spyOn(service['table'], 'updateTableItem');
+  describe('updateTableItem', () => {
+    it('should update table item', () => {
+      const x = 0;
+      const y = 0;
+      const isActive = true;
+      jest.spyOn(service['table'], 'updateTableItem');
 
-    service.updateTableItem(x, y, isActive);
+      service.updateTableItem(x, y, isActive);
 
-    expect(service['table'].updateTableItem).toHaveBeenCalledWith(x, y, isActive);
-    service.tableItems$.subscribe((tableItems) => {
-      expect(tableItems).toStrictEqual(service['table'].tableItems);
+      expect(service['table'].updateTableItem).toHaveBeenCalledWith(x, y, isActive);
+      service.tableItems$.subscribe((tableItems) => {
+        expect(tableItems).toStrictEqual(service['table'].tableItems);
+      });
+    });
+
+    it('should update table item with default value', () => {
+      const x = 0;
+      const y = 0;
+      jest.spyOn(service['table'], 'updateTableItem');
+
+      service.updateTableItem(x, y);
+
+      expect(service['table'].updateTableItem).toHaveBeenCalledWith(x, y, false);
+      service.tableItems$.subscribe((tableItems) => {
+        expect(tableItems).toStrictEqual(service['table'].tableItems);
+      });
     });
   });
 

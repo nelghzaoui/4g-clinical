@@ -1,5 +1,5 @@
-import { Table } from '../../src/app/models/table.class';
-import { TableItem } from '../../src/app/models/table-item.class';
+import { Table } from '../../app/models/table.class';
+import { TableItem } from '../../app/models/table-item.class';
 
 describe('Table', () => {
   let table: Table;

@@ -1,6 +1,6 @@
-import { Robot } from '../../src/app/models/robot.class';
-import { Location } from '../../src/app/models/location.class';
-import { Direction, Orientation } from '../../src/app/models/direction.type';
+import { Robot } from '../../app/models/robot.class';
+import { Location } from '../../app/models/location.class';
+import { Direction, Orientation } from '../../app/models/direction.type';
 
 describe('Robot', () => {
   let robot: Robot;

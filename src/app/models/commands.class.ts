@@ -15,7 +15,7 @@ export class PlaceCommand implements CommandPattern {
   }
 
   validate(): void {
-    if (this.x === undefined || this.y === undefined || this.direction === undefined) {
+    if (!this.x || !this.y || !this.direction) {
       throw new Error('Invalid place command');
     }
   }
@@ -42,7 +42,7 @@ export class TurnCommand implements CommandPattern {
   }
 
   validate(): void {
-    if (this.orientation === undefined) {
+    if (!this.orientation) {
       throw new Error('Invalid turn command');
     }
   }
