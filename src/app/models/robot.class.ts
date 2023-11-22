@@ -23,13 +23,18 @@ export class Robot extends Location {
   }
 
   turn(orientation: Orientation) {
-    const directions: Direction[] = Object.values(Direction);
+    const directions: Direction[] = [
+      Direction.NORTH,
+      Direction.EAST,
+      Direction.SOUTH,
+      Direction.WEST,
+    ];
     let currentDirectionIndex = directions.indexOf(this.direction);
 
     const newIndex =
       orientation === Orientation.LEFT
-        ? (currentDirectionIndex + 1) % directions.length
-        : (currentDirectionIndex - 1 + directions.length) % directions.length;
+        ? (currentDirectionIndex - 1 + directions.length) % directions.length
+        : (currentDirectionIndex + 1) % directions.length;
 
     this.direction = directions[newIndex];
   }
