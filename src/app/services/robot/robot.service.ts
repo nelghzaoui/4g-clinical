@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Robot } from '../../models/robot.class';
 import { Direction, Orientation } from '../../models/direction.type';
 import { Location } from '../../models/location.class';
@@ -6,7 +7,7 @@ import { Location } from '../../models/location.class';
 export class RobotService {
   private robot: Robot | undefined;
 
-  constructor() {}
+  constructor(private readonly matSnackBar: MatSnackBar) {}
 
   place(x: number, y: number, direction: Direction) {
     this.robot = new Robot(x, y, direction);
@@ -37,12 +38,14 @@ export class RobotService {
     return this.robot.turn(orientation);
   }
 
-  report(): string {
+  report(): void {
     if (!this.robot) {
       throw new Error('Robot has not been placed yet');
     }
 
-    return this.robot.toString();
+    this.matSnackBar.open(this.robot.toString(), 'Close', {
+      duration: 5000,
+    });
   }
 
   getCurrentLocation(): Location {

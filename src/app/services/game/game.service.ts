@@ -35,8 +35,8 @@ export class GameService {
     this.robotService.turn(orientation);
   }
 
-  report(): string {
-    return this.robotService.report();
+  report(): void {
+    this.robotService.report();
   }
 
   reset(): void {
