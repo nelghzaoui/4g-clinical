@@ -1,38 +1,48 @@
-<form #commandForm="ngForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="commands">Select your next move:</label>
-    <select id="commands" name="commands" [(ngModel)]="command" required>
-      <option *ngFor="let command of commands" [value]="command">
-        {{ command }}
-      </option>
-    </select>
-  </div>
+<div class="command-form">
+  <form #commandForm="ngForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Select your next move:</mat-label>
+      <mat-select [(value)]="command" required>
+        <mat-option *ngFor="let item of commands" [value]="item">
+          {{ item }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <div *ngIf="command === 'PLACE'">
-    <label for="x">X:</label>
-    <input type="number" id="x" name="x" [(ngModel)]="x" required />
+    <div class="place-forms" *ngIf="command === 'PLACE'">
+      <mat-form-field>
+        <mat-label>X:</mat-label>
+        <input matInput name="x" type="number" [(ngModel)]="x" required />
+      </mat-form-field>
 
-    <label for="y">Y:</label>
-    <input type="number" id="y" name="y" [(ngModel)]="y" required />
+      <mat-form-field>
+        <mat-label>Y:</mat-label>
+        <input matInput name="y" type="number" [(ngModel)]="y" required />
+      </mat-form-field>
 
-    <label for="direction">Direction:</label>
-    <select id="direction" name="direction" [(ngModel)]="direction" required>
-      <option *ngFor="let direction of directions" [value]="direction">
-        {{ direction }}
-      </option>
-    </select>
-  </div>
+      <mat-form-field>
+        <mat-label>Direction:</mat-label>
+        <mat-select [(value)]="direction" required>
+          <mat-option *ngFor="let direction of directions" [value]="direction">
+            {{ direction }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-  <div *ngIf="command === 'TURN'">
-    <label for="turnDirection">Turn Direction:</label>
-    <select id="turnDirection" name="turnDirection" [(ngModel)]="turnDirection" required>
-      <option *ngFor="let orientation of orientations" [value]="orientation">
-        {{ orientation }}
-      </option>
-    </select>
-  </div>
+    <div *ngIf="command === 'TURN'">
+      <mat-form-field>
+        <mat-label>Orientation:</mat-label>
+        <mat-select name="turnDirection" [(value)]="orientation" required>
+          <mat-option *ngFor="let orientation of orientations" [value]="orientation">
+            {{ orientation }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-  <button type="submit">Submit</button>
-</form>
+    <button type="submit" mat-raised-button color="primary">Submit</button>
+  </form>
 
-<p *ngIf="reportLabel">{{ reportLabel }}</p>
+  <p *ngIf="reportLabel">{{ reportLabel }}</p>
+</div>

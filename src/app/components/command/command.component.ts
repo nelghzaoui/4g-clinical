@@ -27,7 +27,7 @@ export class CommandComponent {
   x: number = 0;
   y: number = 0;
   direction: Direction = 'SOUTH';
-  turnDirection: Orientation = 'LEFT';
+  orientation: Orientation = 'LEFT';
 
   constructor(private readonly gameService: GameService) {}
 
@@ -42,7 +42,7 @@ export class CommandComponent {
         command = new MoveCommand(this.gameService);
         break;
       case 'TURN':
-        const turnDirection = this.turnDirection === 'LEFT' ? 'LEFT' : 'RIGHT';
+        const turnDirection = this.orientation === 'LEFT' ? 'LEFT' : 'RIGHT';
         command = new TurnCommand(this.gameService, turnDirection);
         break;
       case 'REPORT':
@@ -62,6 +62,6 @@ export class CommandComponent {
     this.x = 0;
     this.y = 0;
     this.direction = 'SOUTH';
-    this.turnDirection = 'LEFT';
+    this.orientation = 'LEFT';
   }
 }
