@@ -1,11 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { RobotService } from './robot.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 describe('RobotService', () => {
   let service: RobotService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [{ provide: MatSnackBar, useValue: { open: jest.fn() } }, RobotService],
+    });
     service = TestBed.inject(RobotService);
   });
 
@@ -13,78 +16,94 @@ describe('RobotService', () => {
     expect(service).toBeTruthy();
   });
 
-  xdescribe('place', () => {
-    it('should throw an error when placing robot off grid', () => {
-      // arrange
-      const isOffGridSpy = jest.spyOn(service as any, 'isOffGrid').mockReturnValue(true);
-      // act
-      service.place(5, 5, 'NORTH');
-      // assert
-      expect(isOffGridSpy).toThrow('Robot is off grid');
+  it('should place robot', () => {
+    service.place(0, 0, 'NORTH');
+
+    expect(service['robot']).toBeDefined();
+  });
+
+  describe('calculateNewLocation', () => {
+    it('should throw an error if robot has not been placed', () => {
+      expect(() => service.calculateNewLocation()).toThrow('Robot has not been placed yet');
     });
 
-    it('should place robot on grid', () => {
-      // arrange
-      const isOffGridSpy = jest.spyOn(service as any, 'isOffGrid').mockReturnValue(true);
-      // act
+    it('should calculate new location correctly', () => {
       service.place(0, 0, 'NORTH');
-      // assert
-      expect(service.robot).toEqual({ x: 0, y: 0, direction: 'NORTH' });
+      const spy = jest.spyOn(service['robot']!, 'calculateNewLocation');
+
+      service.calculateNewLocation();
+
+      expect(service['robot']).toBeDefined();
+      expect(spy).toHaveBeenCalled();
+    });
+  });
+
+  describe('move', () => {
+    it('should throw an error if robot has not been placed', () => {
+      expect(() => service.move({ x: 0, y: 1 })).toThrow('Robot has not been placed yet');
+    });
+
+    it('should move robot correctly', () => {
+      service.place(0, 0, 'NORTH');
+      const spy = jest.spyOn(service['robot']!, 'moveTo');
+
+      service.move({ x: 0, y: 0 });
+
+      expect(service['robot']).toBeDefined();
+      expect(spy).toHaveBeenCalled();
+    });
+  });
+
+  describe('turn', () => {
+    it('should throw an error if robot has not been placed', () => {
+      expect(() => service.turn('LEFT')).toThrow('Robot has not been placed yet');
+    });
+
+    it('should turn robot correctly', () => {
+      service.place(0, 0, 'NORTH');
+      const spy = jest.spyOn(service['robot']!, 'turn');
+
+      service.turn('LEFT');
+
+      expect(service['robot']).toBeDefined();
+      expect(spy).toHaveBeenCalled();
     });
   });
 
   describe('report', () => {
-    it('should return robot position', () => {
-      // arrange
-      service.robot = { x: 0, y: 0, direction: 'NORTH' };
-      // assert
-      expect(() => service.report()).not.toThrow('Robot has not been placed yet');
-    });
-
-    it('should throw an error if robot not placed yet', () => {
+    it('should throw an error if robot has not been placed', () => {
       expect(() => service.report()).toThrow('Robot has not been placed yet');
     });
-  });
 
-  xdescribe('isMoveForbidden', () => {
-    it('should throw an error when moving robot off grid', () => {
-      // arrange
+    it('should report robot correctly', () => {
+      service.place(0, 0, 'NORTH');
+      const spy = jest.spyOn(service['matSnackBar'], 'open');
 
-      // act
-      const result = service.isMoveForbidden(0, 0);
-      // assert
-      expect(result).toThrow('Forbidden move');
-    });
+      service.report();
 
-    it('should not throw an error when moving robot on grid', () => {
-      // arrange
-      // act
-      const result = service.isMoveForbidden(0, 0);
-      // assert
-      console.log(result);
-      expect(result).not.toThrow('Forbidden move');
+      expect(spy).toHaveBeenCalled();
     });
   });
 
-  xdescribe('isOffGrid', () => {
-    it('should return true when x is less than 0', () => {
-      expect(service['isOffGrid'](-1, 0)).toBe(true);
+  describe('getCurrentLocation', () => {
+    it('should throw an error if robot has not been placed', () => {
+      expect(() => service.getCurrentLocation()).toThrow('Robot has not been placed yet');
     });
 
-    it('should return true when x is greater than 4', () => {
-      expect(service['isOffGrid'](5, 0)).toBe(true);
-    });
+    it('should get current location correctly', () => {
+      service.place(0, 0, 'NORTH');
 
-    it('should return true when y is less than 0', () => {
-      expect(service['isOffGrid'](0, -1)).toBe(true);
-    });
+      const location = service.getCurrentLocation();
 
-    it('should return true when y is greater than 4', () => {
-      expect(service['isOffGrid'](0, 5)).toBe(true);
+      expect(location).toEqual({ x: 0, y: 0 });
     });
+  });
 
-    it('should return false when x and y are between 0 and 4', () => {
-      expect(service['isOffGrid'](0, 0)).toBe(false);
-    });
+  it('should reset robot', () => {
+    service.place(0, 0, 'NORTH');
+
+    service.reset();
+
+    expect(service['robot']).toBeUndefined();
   });
 });

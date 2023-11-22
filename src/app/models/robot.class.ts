@@ -1,21 +1,24 @@
 import { Location } from './location.class';
-import { Direction, Orientation } from './direction.type';
+import { Direction, Orientation, directions } from './direction.type';
 
 export class Robot extends Location {
   constructor(x: number, y: number, public direction: Direction) {
     super(x, y);
-    console.log('Robot created');
+  }
+
+  moveTo(location: Location) {
+    return new Robot(location.x, location.y, this.direction);
   }
 
   calculateNewLocation(): Location {
     switch (this.direction) {
-      case 'NORTH':
+      case Direction.NORTH:
         return { x: this.x, y: this.y + 1 };
-      case 'EAST':
+      case Direction.EAST:
         return { x: this.x + 1, y: this.y };
-      case 'SOUTH':
+      case Direction.SOUTH:
         return { x: this.x, y: this.y - 1 };
-      case 'WEST':
+      case Direction.WEST:
         return { x: this.x - 1, y: this.y };
       default:
         throw new Error('Invalid direction');
@@ -23,12 +26,6 @@ export class Robot extends Location {
   }
 
   turn(orientation: Orientation) {
-    const directions: Direction[] = [
-      Direction.NORTH,
-      Direction.EAST,
-      Direction.SOUTH,
-      Direction.WEST,
-    ];
     let currentDirectionIndex = directions.indexOf(this.direction);
 
     const newIndex =

@@ -19,11 +19,11 @@ describe('TableComponent', () => {
   describe('ngOnInit', () => {
     it('should call initialize', () => {
       // arrange
-      const initializeSpy = jest.spyOn(component['tableService'], 'initialize');
+      jest.spyOn(component['tableService'], 'initialize');
       // act
       component.ngOnInit();
       // assert
-      expect(initializeSpy).toHaveBeenCalled();
+      expect(component['tableService'].initialize).toHaveBeenCalled();
     });
   });
 });

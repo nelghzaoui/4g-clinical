@@ -5,7 +5,7 @@ import { Direction, Orientation } from '../../models/direction.type';
 import { Location } from '../../models/location.class';
 @Injectable({ providedIn: 'root' })
 export class RobotService {
-  private robot: Robot | undefined;
+  private robot?: Robot;
 
   constructor(private readonly matSnackBar: MatSnackBar) {}
 
@@ -26,8 +26,7 @@ export class RobotService {
       throw new Error('Robot has not been placed yet');
     }
 
-    this.robot.x = nextLocation.x;
-    this.robot.y = nextLocation.y;
+    this.robot = this.robot.moveTo(nextLocation);
   }
 
   turn(orientation: Orientation) {
@@ -35,7 +34,7 @@ export class RobotService {
       throw new Error('Robot has not been placed yet');
     }
 
-    return this.robot.turn(orientation);
+    this.robot.turn(orientation);
   }
 
   report(): void {

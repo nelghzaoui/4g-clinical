@@ -7,7 +7,12 @@ export const Direction = {
 
 export type Direction = (typeof Direction)[keyof typeof Direction];
 
-export const Directions = Object.values(Direction);
+export const directions: Direction[] = [
+  Direction.NORTH,
+  Direction.EAST,
+  Direction.SOUTH,
+  Direction.WEST,
+];
 
 export const Orientation = {
   LEFT: 'LEFT',
@@ -16,4 +21,4 @@ export const Orientation = {
 
 export type Orientation = (typeof Orientation)[keyof typeof Orientation];
 
-export const Orientations = Object.values(Orientation);
+export const orientations = Object.values(Orientation);

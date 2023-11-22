@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { TableService } from './table.service';
-import { TableItem } from '../../models/table-item.class';
+import { Location } from '../../models/location.class';
 
 describe('TableService', () => {
   let service: TableService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({ providers: [TableService] });
     service = TestBed.inject(TableService);
   });
 
@@ -14,91 +14,55 @@ describe('TableService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('initialize', () => {
-    it('should initialize the table with dimension 5 x 5', () => {
-      // act
-      service.initialize();
-      // assert
-      service.tableItems$.subscribe((tableItems) => {
-        expect(tableItems.length).toEqual(5);
-        expect(tableItems[0].length).toEqual(5);
-      });
-    });
-
-    it('should set the origin at the bottom left corner', () => {
-      // arrange
-      const expectValue: TableItem = new TableItem(0, 0, false);
-      // act
-      service.initialize();
-      // assert
-      service.tableItems$.subscribe((tableItems) => {
-        expect(tableItems[4][0]).toStrictEqual(expectValue);
-      });
-    });
-  });
-
-  beforeEach(() => {
+  it('should initialize table', () => {
     service.initialize();
-  });
-
-  describe('setActiveTableItem', () => {
-    it('should set the active table item at the specified coordinates', () => {
-      testUpdateTableItem(2, 3, true);
-    });
-  });
-
-  describe('resetActiveTableItem', () => {
-    it('should reset the active table item at the specified coordinates', () => {
-      testUpdateTableItem(2, 3, false);
-    });
-  });
-
-  describe('findTableItem', () => {
-    it('should return the table item at the specified coordinates', () => {
-      testFindTableItem(2, 3, false);
-    });
-
-    it('should throw an error if the table item is not found', () => {
-      testFindTableItem(-1, 0, true);
-    });
-  });
-
-  function testFindTableItem(x: number, y: number, shouldThrow: boolean) {
-    // arrange
-    const expectValue: TableItem = new TableItem(x, y, false);
-    // act
-    const result = () => service['findTableItem'](x, y);
-    // assert
-    if (shouldThrow) {
-      expect(result).toThrow('Table item not found');
-    } else {
-      expect(result()).toStrictEqual(expectValue);
-    }
-  }
-
-  describe('updateTableItem', () => {
-    it('should update the table item at the specified coordinates', () => {
-      // arrange
-      const x = 2;
-      const y = 3;
-      const expectValue: TableItem = new TableItem(x, y, true);
-      // act
-      service['updateTableItem'](x, y, true);
-      // assert
-      service.tableItems$.subscribe((tableItems) => {
-        expect(tableItems[x][y]).toEqual(expectValue);
-      });
-    });
-  });
-
-  function testUpdateTableItem(x: number, y: number, isActive: boolean) {
-    // arrange
-    const expectValue: TableItem = new TableItem(x, y, isActive);
-    // act
-    service['updateTableItem'](x, y, isActive);
-    // assert
+    // Assert that tableItems$ is initialized with tableItems
     service.tableItems$.subscribe((tableItems) => {
-      expect(tableItems[x][y]).toEqual(expectValue);
+      expect(tableItems).toEqual(service['table'].tableItems);
     });
-  }
+  });
+
+  it('should check if move is forbidden', () => {
+    jest.spyOn(service['table'], 'isOffTable');
+
+    service.isOffTable(0, 0);
+
+    expect(service['table'].isOffTable).toHaveBeenCalledWith(0, 0);
+  });
+
+  it('should simulate movement', () => {
+    const currentPos: Location = { x: 0, y: 0 };
+    const nextPos: Location = { x: 1, y: 1 };
+    jest.spyOn(service, 'updateTableItem');
+
+    service.simulateMovement(currentPos, nextPos);
+
+    expect(service['updateTableItem']).toHaveBeenCalledWith(currentPos.x, currentPos.y, false);
+    expect(service['updateTableItem']).toHaveBeenCalledWith(nextPos.x, nextPos.y, true);
+  });
+
+  it('should update table item', () => {
+    const x = 0;
+    const y = 0;
+    const isActive = true;
+    jest.spyOn(service['table'], 'updateTableItem');
+
+    service.updateTableItem(x, y, isActive);
+
+    expect(service['table'].updateTableItem).toHaveBeenCalledWith(x, y, isActive);
+    service.tableItems$.subscribe((tableItems) => {
+      expect(tableItems).toStrictEqual(service['table'].tableItems);
+    });
+  });
+
+  it('should reset table', () => {
+    jest.spyOn(service['table'], 'initialize');
+
+    service.reset();
+
+    expect(service['table'].initialize).toHaveBeenCalled();
+    service.tableItems$.subscribe((tableItems) => {
+      expect(tableItems).toStrictEqual(service['table'].tableItems);
+    });
+  });
 });

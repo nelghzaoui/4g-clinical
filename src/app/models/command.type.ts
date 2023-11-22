@@ -7,4 +7,4 @@ export const Command = {
 
 export type Command = (typeof Command)[keyof typeof Command];
 
-export const Commands = Object.values(Command);
+export const commands = Object.values(Command);

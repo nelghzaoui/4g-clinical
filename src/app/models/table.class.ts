@@ -19,41 +19,26 @@ export class Table {
     }
   }
 
-  private findTableItem(x: number, y: number): TableItem {
-    const item = this.tableItems.flat().find((item) => item.x === x && item.y === y);
-
-    if (!item) {
-      throw new Error('Table item not found');
-    }
-
-    return item;
-  }
-
   updateTableItem(x: number, y: number, isActive: boolean): TableItem[][] {
     const item: TableItem = this.findTableItem(x, y);
     item.setActive(isActive);
 
-    // Update the item in the array
     return this.tableItems;
-    // this.tableItemsSubject$.next(this.table.tableItems);
   }
 
-  hasLocation(location: Location): boolean {
-    return this.isOffGrid(location.x, location.y);
+  isOffTable(x: number, y: number): boolean {
+    return x < this.zero || x >= this.width || y < this.zero || y >= this.height;
   }
 
-  isMoveForbidden(x: number, y: number): boolean {
-    if (this.isOffGrid(x, y) && this.isOnCorner(x, y)) {
-      return true;
+  private findTableItem(x: number, y: number): TableItem {
+    for (const row of this.tableItems) {
+      for (const item of row) {
+        if (item.x === x && item.y === y) {
+          return item;
+        }
+      }
     }
-    return false;
-  }
 
-  private isOffGrid(x: number, y: number): boolean {
-    return x < this.zero || x > this.width || y < this.zero || y > this.height;
-  }
-
-  private isOnCorner(x: number, y: number) {
-    return (x === this.zero || x === this.width - 1) && (y === this.zero || y === this.height - 1);
+    throw new Error('Table item not found');
   }
 }

@@ -11,8 +11,8 @@ export class GameService {
   ) {}
 
   placeRobot(x: number, y: number, direction: Direction): void {
-    if (this.tableService.hasLocation(x, y)) {
-      throw new Error('Robot is off grid');
+    if (this.tableService.isOffTable(x, y)) {
+      throw new Error('Cannot place robot off table');
     }
 
     this.robotService.place(x, y, direction);
@@ -23,11 +23,11 @@ export class GameService {
     const oldLocation = this.robotService.getCurrentLocation();
     const nextLocation = this.robotService.calculateNewLocation();
 
-    if (!this.tableService.isMoveForbidden(nextLocation.x, nextLocation.y)) {
+    if (!this.tableService.isOffTable(nextLocation.x, nextLocation.y)) {
       this.robotService.move(nextLocation);
       this.tableService.simulateMovement(oldLocation, nextLocation);
     } else {
-      throw new Error('Move is forbidden');
+      throw new Error('Move is forbidden as robot will fall off table');
     }
   }
 

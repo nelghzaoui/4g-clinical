@@ -1,3 +1,3 @@
 export abstract class Location {
-  constructor(public x: number, public y: number) {}
+  constructor(public readonly x: number, public readonly y: number) {}
 }

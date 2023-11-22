@@ -18,25 +18,21 @@ export class TableService {
     this.tableItemsSubject$.next(this.table.tableItems);
   }
 
-  isMoveForbidden(x: number, y: number): boolean {
-    return this.table.isMoveForbidden(x, y);
+  isOffTable(x: number, y: number): boolean {
+    return this.table.isOffTable(x, y);
   }
 
-  simulateMovement(currentLocation: Location, nextLocation: Location) {
+  simulateMovement(currentLocation: Location, nextLocation: Location): void {
     this.updateTableItem(currentLocation.x, currentLocation.y, false);
     this.updateTableItem(nextLocation.x, nextLocation.y, true);
   }
 
-  updateTableItem(x: number, y: number, isActive: boolean = false) {
+  updateTableItem(x: number, y: number, isActive: boolean = false): void {
     const items = this.table.updateTableItem(x, y, isActive);
     this.tableItemsSubject$.next(items);
   }
 
-  hasLocation(x: number, y: number): boolean {
-    return this.table.hasLocation({ x, y });
-  }
-
-  reset() {
+  reset(): void {
     this.table.initialize();
     this.tableItemsSubject$.next(this.table.tableItems);
   }
