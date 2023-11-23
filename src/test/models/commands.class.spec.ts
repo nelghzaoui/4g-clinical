@@ -29,7 +29,7 @@ describe('PlaceCommand', () => {
 
   it('should fail to validate the place command with invalid parameters', () => {
     // arrange
-    placeCommand = new PlaceCommand(gameService, null as any, null as any, 'NORTH');
+    placeCommand = new PlaceCommand(gameService, undefined as any, undefined as any, 'NORTH');
     expect(() => placeCommand.validate()).toThrow('Invalid place command');
   });
 
