@@ -7,14 +7,14 @@ import { GameService } from './services/game/game.service';
     <div class="container">
       <div class="title">
         <h1 style="text-align: center">Mars robot game</h1>
-        <button mat-fab color="primary">
+        <button data-cy="btn-reset" mat-fab color="primary">
           <mat-icon fontIcon="refresh"></mat-icon>
         </button>
       </div>
 
-      <table-component></table-component>
+      <table-component data-cy="table-component"></table-component>
 
-      <command-component></command-component>
+      <command-component data-cy="command-component"></command-component>
     </div>
   `,
   styles: [

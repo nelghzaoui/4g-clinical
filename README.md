@@ -47,6 +47,4 @@
 
 ## What is still left to do:
 
-- Fix turn orientation issue
-- Add unit tests
 - Add e2e tests

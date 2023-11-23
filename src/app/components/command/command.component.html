@@ -2,7 +2,7 @@
   <form #commandForm="ngForm" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <mat-label>Select your next move:</mat-label>
-      <mat-select [(value)]="command" required>
+      <mat-select data-cy="command" [(value)]="command" required>
         <mat-option *ngFor="let item of commands" [value]="item">
           {{ item }}
         </mat-option>
@@ -12,17 +12,17 @@
     <div class="place-forms" *ngIf="command === 'PLACE'">
       <mat-form-field>
         <mat-label>X:</mat-label>
-        <input matInput name="x" type="number" [(ngModel)]="x" required />
+        <input data-cy="place-x" matInput name="x" type="number" [(ngModel)]="x" required />
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Y:</mat-label>
-        <input matInput name="y" type="number" [(ngModel)]="y" required />
+        <input data-cy="place-y" matInput name="y" type="number" [(ngModel)]="y" required />
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Direction:</mat-label>
-        <mat-select [(value)]="direction" required>
+        <mat-select data-cy="place-direction" [(value)]="direction" required>
           <mat-option *ngFor="let direction of directions" [value]="direction">
             {{ direction }}
           </mat-option>
@@ -33,7 +33,7 @@
     <div *ngIf="command === 'TURN'">
       <mat-form-field>
         <mat-label>Orientation:</mat-label>
-        <mat-select name="turnDirection" [(value)]="orientation" required>
+        <mat-select data-cy="turn" name="turnDirection" [(value)]="orientation" required>
           <mat-option *ngFor="let orientation of orientations" [value]="orientation">
             {{ orientation }}
           </mat-option>
@@ -41,8 +41,6 @@
       </mat-form-field>
     </div>
 
-    <button type="submit" mat-raised-button color="primary">Submit</button>
+    <button data-cy="confirm" type="submit" mat-raised-button color="primary">Submit</button>
   </form>
-
-  <p *ngIf="reportLabel">{{ reportLabel }}</p>
 </div>

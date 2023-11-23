@@ -15,7 +15,7 @@ export class PlaceCommand implements CommandPattern {
   }
 
   validate(): void {
-    if (!this.x || !this.y || !this.direction) {
+    if (this.x === undefined || this.y === undefined || !this.direction) {
       throw new Error('Invalid place command');
     }
   }

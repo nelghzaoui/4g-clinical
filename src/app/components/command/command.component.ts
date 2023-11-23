@@ -16,13 +16,12 @@ export class CommandComponent {
   commands: Command[] = commands;
   directions: Direction[] = directions;
   orientations: Orientation[] = orientations;
-  reportLabel: string = '';
   /* Forms values */
-  command: Command = 'PLACE';
+  command: Command = Command.PLACE;
   x: number = 0;
   y: number = 0;
-  direction: Direction = 'SOUTH';
-  orientation: Orientation = 'LEFT';
+  direction: Direction = Direction.SOUTH;
+  orientation: Orientation = Orientation.LEFT;
 
   constructor(private readonly gameService: GameService) {}
 
