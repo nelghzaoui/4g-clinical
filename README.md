@@ -45,6 +45,22 @@
 
 - Challenge the rules but not excessively.
 
-## What is still left to do:
+# How to run the application
 
-- Add e2e tests
+## Run the application
+
+- Run `npm install` to install the dependencies.
+- Run `npm run build` to build the application.
+- Run `npm run start` to start the application.
+- Navigate to `http://localhost:4200/`.
+- Enjoy!
+
+## Running unit tests
+
+- Run `npm run test` to execute the unit tests via Jest.
+- Run `npm run test:coverage` to execute the unit tests via Jest and generate a coverage report.
+
+## Running end-to-end tests
+
+- Run `npm run e2e` to execute the end-to-end tests via Cypress.
+- Run `npm run e2e:open` to open the Cypress GUI and execute the end-to-end tests.
