@@ -1,4 +1,8 @@
-import { cypressElementQuery } from './app.selector';
+/**
+ * This file contains end-to-end tests for the App component.
+ * The tests ensure that the App is loaded correctly and that its child components exist.
+ */
+import { select } from './app.selector';
 
 describe('App is loaded correctly', () => {
   beforeEach(() => {
@@ -10,14 +14,14 @@ describe('App is loaded correctly', () => {
   });
 
   it('should have a button reset', () => {
-    cypressElementQuery('btn-reset').should('exist');
+    select('btn-reset').should('exist');
   });
 
   it('should have a table component', () => {
-    cypressElementQuery('table-component').should('exist');
+    select('table-component').should('exist');
   });
 
   it('should have a command component', () => {
-    cypressElementQuery('command-component').should('exist');
+    select('command-component').should('exist');
   });
 });

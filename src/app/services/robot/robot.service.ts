@@ -43,7 +43,10 @@ export class RobotService {
     }
 
     this.matSnackBar.open(this.robot.toString(), 'Close', {
-      duration: 5000,
+      duration: 20000,
+      data: {
+        ['attr.data-cy']: 'snackbar',
+      },
     });
   }
 
