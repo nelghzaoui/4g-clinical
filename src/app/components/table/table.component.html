@@ -1,13 +1,10 @@
 <div *ngIf="tableItems$ | async as items" class="table">
   <ng-container *ngFor="let item of items">
     <ng-container *ngFor="let subItem of item">
-      <div
-        id="table-item-{{ subItem.x }}-{{ subItem.y }}"
-        [ngClass]="{
-          'table-item': true,
-          'table-item-active': subItem.isActive
-        }"
-      ></div>
+      <img
+        [src]="subItem.isActive ? './assets/images/robot.png' : './assets/images/background.png'"
+        class="table-item"
+      />
     </ng-container>
   </ng-container>
 </div>

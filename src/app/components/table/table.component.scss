@@ -4,17 +4,6 @@
   justify-content: center;
 
   .table-item {
-    border: solid 1px black;
-    flex: 0 1 calc(20% - 8px);
-  }
-
-  .table-item::after {
-    content: "";
-    display: block;
-    padding-bottom: 100%;
-  }
-
-  .table-item-active {
-    background-color: #c0392b;
+    max-width: calc(20% - 8px);
   }
 }

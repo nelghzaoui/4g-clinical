@@ -35,7 +35,7 @@
 ## Implementation
 
 - The application can be implemented in the frontend, backend, or as a multi-tiered app.
-- Technologies used: Django/Angular.
+- Technologies used: Angular.
 - Consider UI/UX design.
 - Follow coding/framework best practices.
 - Ensure code readability, genericity, sustainability, and evolution.
