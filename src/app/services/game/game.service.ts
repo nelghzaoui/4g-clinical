@@ -15,6 +15,9 @@ export class GameService {
       throw new Error('Cannot place robot off table');
     }
 
+    // Reset the robot and table before placing the robot
+    this.reset();
+
     this.robotService.place(x, y, direction);
     this.tableService.updateTableItem(x, y, true);
   }

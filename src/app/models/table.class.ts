@@ -1,4 +1,3 @@
-import { Location } from './location.class';
 import { TableItem } from './table-item.class';
 
 export class Table {
