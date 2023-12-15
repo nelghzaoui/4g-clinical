@@ -58,6 +58,29 @@ export class RobotService {
     return { x: this.robot.x, y: this.robot.y };
   }
 
+  getRotationAngle(direction: Direction): number {
+    switch (direction) {
+      case Direction.NORTH:
+        return 0;
+      case Direction.EAST:
+        return 90;
+      case Direction.SOUTH:
+        return 180;
+      case Direction.WEST:
+        return 270;
+      default:
+        return 0;
+    }
+  }
+
+  getDirection(): Direction {
+    if (!this.robot) {
+      throw new Error('Robot has not been placed yet');
+    }
+
+    return this.robot.direction;
+  }
+
   reset() {
     this.robot = undefined;
   }

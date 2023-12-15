@@ -39,6 +39,10 @@ export class GameService {
     this.robotService.report();
   }
 
+  getRobotDirection(): Direction {
+    return this.robotService.getDirection();
+  }
+
   reset(): void {
     this.robotService.reset();
     this.tableService.reset();

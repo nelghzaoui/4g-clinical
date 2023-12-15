@@ -2,7 +2,11 @@
   <ng-container *ngFor="let item of items">
     <ng-container *ngFor="let subItem of item">
       <img
-        [src]="subItem.isActive ? './assets/images/robot.png' : './assets/images/background.png'"
+        [src]="
+          subItem.isActive
+            ? './assets/images/robot-' + gameService.getRobotDirection() + '.png'
+            : './assets/images/background.png'
+        "
         class="table-item"
       />
     </ng-container>
